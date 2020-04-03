@@ -1,4 +1,7 @@
 
+# ucontas-installer
+Repo usado para implanta aplicação, para testes e demostração através de docker-compose, com o back, o front e o banco
+
 ## Banco Oracle 12 SE
 
 Para comprir o requisito do banco Oracle crei um container com o oracle 12c Standard Edition e salvei a [imagem no docker hub](https://hub.docker.com/repository/docker/uniliva/oracle_db).

@@ -9,11 +9,26 @@ services:
      - "1521:1521"
      - "5500:5500"
    volumes:
-     - db_dados:/opt/oracle/oradata
+     - db_data:/opt/oracle/oradata
      - ./scripts:/opt/oracle/scripts/startup
    environment:
      ORACLE_PWD: "unisenha"
    networks:
+     - network-ucontas
+
+  ucontas-api:
+    image: uniliva/ucontas-api:latest
+    container_name: ucontas-api
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "9090:8080" 
+    command: mvn spring-boot:run
+    depends_on:
+      - db
+    networks:
      - network-ucontas
 
 networks:
@@ -21,4 +36,4 @@ networks:
     driver: bridge
 
 volumes:
-  db_dados:
+  db_data:
