@@ -37,8 +37,8 @@ CREATE TABLE &P_SCHEMA..TB_CATEGORY (
 	);
 
 -- Sequences
-create sequence &P_SCHEMA..SEQ_CF_COD_BILL start with 5 increment by 1 cache 20 nocycle noorder;
-create sequence &P_SCHEMA..SEQ_CF_COD_CATEGORY start with 5 increment by 1 cache 20 nocycle noorder;
+create sequence &P_SCHEMA..SEQ_CF_COD_BILL start with 20 increment by 1 cache 20 nocycle noorder;
+create sequence &P_SCHEMA..SEQ_CF_COD_CATEGORY start with 20 increment by 1 cache 20 nocycle noorder;
 
 -- Pks
 ALTER TABLE &P_SCHEMA..TB_CATEGORY ADD CONSTRAINT PK_COD_CATEGORY PRIMARY KEY (COD_CATEGORY);

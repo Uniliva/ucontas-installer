@@ -17,7 +17,7 @@ services:
      - network-ucontas
 
   ucontas-api:
-    image: uniliva/ucontas-api:latest
+    image: uniliva/ucontas-api
     container_name: ucontas-api
     restart: always
     environment:
@@ -30,6 +30,19 @@ services:
       - db
     networks:
      - network-ucontas
+  
+  ucontas-front:
+    image: uniliva/ucontas-front
+    container_name: "ucontas-front"
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+    ports:
+      - "9095:80" 
+    depends_on:
+      - ucontas-api
+    networks:
+      - network-ucontas
 
 networks:
   network-ucontas:
