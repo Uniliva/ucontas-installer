@@ -5,7 +5,15 @@ Repo usado para implanta aplicação, para testes e demostração através de do
 
 ---
 
-## Como Executar localmente
+## Acessando projeto no heroku
+
+Para facilitar o acesso, esse projeto foi ajustado, através da branch _heroku-version_, para ser executado no heroku:
+
+- ucontas-front: https://ucontas-front.herokuapp.com/
+- swagger ucontas-api: https://ucontas-api.herokuapp.com/swagger-ui.html
+
+---
+## Rodar o projeto localmente
 
 - Passo 1: Requisitos
 
