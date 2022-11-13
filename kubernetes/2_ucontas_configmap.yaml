@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ucontas-configmap
+data:
+  db_url: ucontas-db-service
+  api_url: http://api.ucontas-app.com
+  db_schema: postgres

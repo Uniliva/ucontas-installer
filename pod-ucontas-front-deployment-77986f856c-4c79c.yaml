@@ -1,0 +1,116 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-11-12T23:51:09Z"
+  generateName: ucontas-front-deployment-77986f856c-
+  labels:
+    app: ucontas-front
+    pod-template-hash: 77986f856c
+  name: ucontas-front-deployment-77986f856c-4c79c
+  namespace: ucontas-app
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: ucontas-front-deployment-77986f856c
+    uid: b6623615-b10e-4296-8b03-55cd13d6974b
+  resourceVersion: "2314"
+  uid: 84bc0f32-88da-45c8-b071-51910908111e
+spec:
+  containers:
+  - env:
+    - name: API_URL
+      valueFrom:
+        configMapKeyRef:
+          key: api_url
+          name: ucontas-configmap
+    image: uniliva/ucontas-front
+    imagePullPolicy: Always
+    name: ucontas-front
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-rr8g6
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: uni-cluster-worker
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-rr8g6
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-12T23:51:09Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-12T23:51:12Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-12T23:51:12Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-12T23:51:09Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://f5abd8975538b38ed7a06d1dd522f9f0347800a8e00b9542d080abdbbececaf4
+    image: docker.io/uniliva/ucontas-front:latest
+    imageID: docker.io/uniliva/ucontas-front@sha256:1be144ff10939dc23a5812e5b7b16cd9f2a431583f3e83b1a2e48b0b7bf15768
+    lastState: {}
+    name: ucontas-front
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-11-12T23:51:12Z"
+  hostIP: 172.19.0.3
+  phase: Running
+  podIP: 10.244.1.8
+  podIPs:
+  - ip: 10.244.1.8
+  qosClass: BestEffort
+  startTime: "2022-11-12T23:51:09Z"

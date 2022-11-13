@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: ucontas-app
+  labels:
+    app: ucontas-db
+  name: ucontas-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ucontas-db
+  template:
+    metadata:
+      labels:
+        app: ucontas-db
+    spec:
+      containers:
+        - env:
+            - name:  POSTGRES_USER
+              valueFrom: 
+                secretKeyRef:
+                  name: ucontas-secrets
+                  key: username
+            - name:  POSTGRES_PASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: ucontas-secrets
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: ucontas-configmap
+                  key: db_schema
+          image: postgres:14.1-alpine
+          name: postgres-server
+          ports:
+            - containerPort: 5432
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: db-data
+      restartPolicy: Always
+      volumes:
+      - name: db-data
+        hostPath:
+          path: /tmp/db-data
+          type: DirectoryOrCreate
+
+--- 
+
+# Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ucontas-app
+  name: ucontas-db-service
+spec:
+  ports:
+    - name: "5432"
+      port: 5432
+      targetPort: 5432
+  selector:
+    app: ucontas-db
+
+# ---
+# # NodePort
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   namespace: ucontas-app
+#   name: db-node-port
+# spec:
+#   type: NodePort
+#   selector:
+#     app: ucontas-db
+#   ports:
+#   - port: 8085
+#     targetPort: 5432

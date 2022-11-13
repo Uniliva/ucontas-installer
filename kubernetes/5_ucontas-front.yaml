@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: ucontas-app
+  labels:
+    app: ucontas-front
+  name: ucontas-front-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ucontas-front
+  template:
+    metadata:
+      labels:
+        app: ucontas-front
+    spec:
+      containers:
+        - env:
+            - name: API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: ucontas-configmap
+                  key: api_url
+          image: uniliva/ucontas-front
+          name: ucontas-front
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ucontas-app
+  labels:
+    app: ucontas-front
+  name: ucontas-front-service
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      nodePort: 32222
+      targetPort: 80
+  selector:
+    app: ucontas-front
+status:
+  loadBalancer: {}
+
+
